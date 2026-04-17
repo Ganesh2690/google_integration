@@ -5,7 +5,6 @@ import {
   Star,
   CalendarDays,
   Settings,
-  Users,
   AlertTriangle,
   Clock,
   CheckSquare,
