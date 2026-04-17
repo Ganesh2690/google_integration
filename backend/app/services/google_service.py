@@ -26,7 +26,7 @@ class GoogleService:
         )
         return build("calendar", "v3", credentials=creds, cache_discovery=False)
 
-    @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=8))
+    @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=8), reraise=True)
     def _create_event_sync(
         self,
         *,
