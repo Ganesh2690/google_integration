@@ -17,7 +17,7 @@ jobs:
       postgres:
         image: postgres:15-alpine
         env:
-          POSTGRES_DB: clinready_test
+          POSTGRES_DB: interview_calendar_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         ports:
@@ -46,7 +46,7 @@ jobs:
 
       - name: Run migrations
         env:
-          DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/clinready_test
+          DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/interview_calendar_test
           SECRET_KEY: test-secret
           GOOGLE_CLIENT_ID: test
           GOOGLE_CLIENT_SECRET: test
@@ -54,7 +54,7 @@ jobs:
 
       - name: Pytest
         env:
-          DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/clinready_test
+          DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/interview_calendar_test
           SECRET_KEY: test-secret
           GOOGLE_CLIENT_ID: test
           GOOGLE_CLIENT_SECRET: test

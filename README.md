@@ -1,4 +1,4 @@
-# ClinReady — Interview Calendar Module
+# Interview Calendar Module
 
 A production-ready **Interview Calendar** for healthcare HR teams: schedule, track, and manage candidate interviews with Google Calendar / Meet integration, department filtering, and a smooth React UI.
 
@@ -191,4 +191,4 @@ SCHEDULED ──► COMPLETED   (terminal)
 
 ## License
 
-MIT © 2026 ClinReady
+MIT © 2026

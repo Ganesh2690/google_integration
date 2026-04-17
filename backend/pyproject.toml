@@ -1,7 +1,7 @@
 [project]
-name = "clinready-backend"
+name = "interview-calendar-backend"
 version = "0.1.0"
-description = "ClinReady Interview Calendar Backend"
+description = "Interview Calendar Backend"
 requires-python = ">=3.11"
 dependencies = [
     "aiosqlite>=0.20.0",

@@ -14,7 +14,7 @@ def create_app() -> FastAPI:
     configure_logging()
 
     application = FastAPI(
-        title="ClinReady Interview Calendar API",
+        title="Interview Calendar API",
         version="1.0.0",
         docs_url="/docs",
         redoc_url="/redoc",

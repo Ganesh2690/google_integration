@@ -1,5 +1,5 @@
 # Google Calendar & Google Meet Integration Guide
-### ClinReady — Interview Calendar Module
+### Interview Calendar Module
 
 > **Who is this for?**  
 > Junior developers who want to understand, replicate, or extend the Google Calendar and Google Meet integration in this project. No prior Google API experience needed.
@@ -26,7 +26,7 @@
 
 ## 1. What Does This Integration Do?
 
-When a recruiter schedules an interview in ClinReady:
+When a recruiter schedules an interview:
 
 - A **Google Calendar event** is automatically created in the interviewer's Google Calendar
 - A **Google Meet video link** is generated and attached to that event
@@ -41,7 +41,7 @@ When a recruiter schedules an interview in ClinReady:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        CLINREADY SYSTEM                          │
+│                     INTERVIEW CALENDAR SYSTEM                    │
 │                                                                  │
 │  ┌──────────────┐    REST API     ┌────────────────────────┐    │
 │  │   React UI   │ ─────────────► │   FastAPI Backend       │    │
@@ -152,7 +152,7 @@ class Settings(BaseSettings):
 
 ## Phase 2 — OAuth 2.0 Login Flow
 
-The interviewer must log in with Google so ClinReady can act on their behalf.
+The interviewer must log in with Google so the app can act on their behalf.
 
 ### What Happens Step by Step
 

@@ -84,7 +84,7 @@ export function Sidebar() {
       {/* Logo */}
       <div className="flex items-center gap-2 px-4 py-4 border-b border-gray-100">
         <ShieldCheck size={28} className="text-brand-teal" strokeWidth={2} />
-        <span className="text-xl font-bold text-gray-900">ClinReady</span>
+        <span className="text-xl font-bold text-gray-900">Interview Calendar</span>
       </div>
 
       {/* Navigation */}

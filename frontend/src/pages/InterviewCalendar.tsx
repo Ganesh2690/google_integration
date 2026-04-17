@@ -98,7 +98,7 @@ export function InterviewCalendar() {
     const lines = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
-      'PRODID:-//ClinReady//Interview Calendar//EN',
+      'PRODID:-//Interview Calendar//EN',
       ...meetings.flatMap((m) => [
         'BEGIN:VEVENT',
         `DTSTART:${m.date.replace(/[-:]/g, '').replace('.000Z', 'Z')}`,
@@ -216,7 +216,7 @@ export function InterviewCalendar() {
 
       {/* Footer */}
       <footer className="py-4 text-center text-sm text-gray-500 border-t border-gray-100">
-        2026 © <span className="text-brand-teal font-medium">ClinReady</span>, All Rights Reserved
+        2026 © <span className="text-brand-teal font-medium">Interview Calendar</span>, All Rights Reserved
       </footer>
 
       {/* Modals */}
