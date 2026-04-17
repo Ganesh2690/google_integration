@@ -3,8 +3,8 @@ from __future__ import annotations
 import uuid
 from typing import Any
 
-from googleapiclient.discovery import build  # type: ignore[import-untyped]
 from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build  # type: ignore[import-untyped]
 from starlette.concurrency import run_in_threadpool
 from tenacity import retry, stop_after_attempt, wait_exponential
 

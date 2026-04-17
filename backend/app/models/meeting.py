@@ -1,16 +1,16 @@
 from __future__ import annotations
 
-from enum import Enum
 from datetime import datetime
+from enum import StrEnum
 
-from sqlalchemy import String, Integer, DateTime, ForeignKey, JSON
+from sqlalchemy import JSON, DateTime, ForeignKey, Integer, String
 from sqlalchemy import Enum as SAEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
 
 
-class MeetingStatus(str, Enum):
+class MeetingStatus(StrEnum):
     DRAFT = "DRAFT"
     SCHEDULED = "SCHEDULED"
     COMPLETED = "COMPLETED"
@@ -18,14 +18,14 @@ class MeetingStatus(str, Enum):
     RESCHEDULED = "RESCHEDULED"
 
 
-class LocationType(str, Enum):
+class LocationType(StrEnum):
     GOOGLE_MEET = "GOOGLE_MEET"
     ZOOM = "ZOOM"
     MS_TEAMS = "MS_TEAMS"
     PHYSICAL = "PHYSICAL"
 
 
-class Department(str, Enum):
+class Department(StrEnum):
     CARDIOLOGY = "CARDIOLOGY"
     LABORATORY = "LABORATORY"
     NURSING = "NURSING"
@@ -44,7 +44,7 @@ class Meeting(Base):
     position: Mapped[str] = mapped_column(String(120), nullable=False)
     department: Mapped[Department] = mapped_column(SAEnum(Department), nullable=False)
     host_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"), nullable=False)
-    host: Mapped["User"] = relationship("User", back_populates="meetings_hosted")
+    host: Mapped[User] = relationship("User", back_populates="meetings_hosted")
     date: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     duration_mins: Mapped[int] = mapped_column(Integer, default=30, nullable=False)
     location_type: Mapped[LocationType] = mapped_column(SAEnum(LocationType), nullable=False)
@@ -64,7 +64,7 @@ class Meeting(Base):
         DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
     )
 
-    audit_logs: Mapped[list["AuditLog"]] = relationship(
+    audit_logs: Mapped[list[AuditLog]] = relationship(
         "AuditLog", back_populates="meeting", cascade="all, delete-orphan"
     )
 
@@ -78,7 +78,7 @@ class User(Base):
     role: Mapped[str] = mapped_column(String(32), nullable=False)  # RECRUITER | INTERVIEWER | ADMIN
     google_tokens: Mapped[dict | None] = mapped_column(JSON, nullable=True)  # type: ignore[type-arg]
 
-    meetings_hosted: Mapped[list["Meeting"]] = relationship("Meeting", back_populates="host")
+    meetings_hosted: Mapped[list[Meeting]] = relationship("Meeting", back_populates="host")
 
 
 class AuditLog(Base):
@@ -88,7 +88,7 @@ class AuditLog(Base):
     meeting_id: Mapped[str] = mapped_column(
         String, ForeignKey("meetings.id", ondelete="CASCADE"), nullable=False
     )
-    meeting: Mapped["Meeting"] = relationship("Meeting", back_populates="audit_logs")
+    meeting: Mapped[Meeting] = relationship("Meeting", back_populates="audit_logs")
     action: Mapped[str] = mapped_column(
         String(32), nullable=False
     )  # CREATED | UPDATED | RESCHEDULED | CANCELLED | COMPLETED

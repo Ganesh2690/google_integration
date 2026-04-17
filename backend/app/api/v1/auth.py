@@ -74,7 +74,6 @@ async def google_oauth_callback(
         )
     userinfo = resp.json()
 
-    google_id = userinfo["id"]
     email = userinfo["email"]
     name = userinfo.get("name", email)
 
@@ -113,6 +112,7 @@ async def refresh_token(
     db: AsyncSession = Depends(get_db),
 ) -> TokenResponse:
     from fastapi import HTTPException
+
     from app.core.security import decode_access_token
 
     body = await request.json()
@@ -121,7 +121,7 @@ async def refresh_token(
         payload = decode_access_token(old_token)
         user_id: str = payload["sub"]
     except Exception:
-        raise HTTPException(status_code=401, detail="Invalid token")
+        raise HTTPException(status_code=401, detail="Invalid token") from None
 
     result = await db.execute(select(User).where(User.id == user_id))
     user = result.scalar_one_or_none()

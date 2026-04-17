@@ -1,14 +1,13 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
 from unittest.mock import AsyncMock, patch
 
 import pytest
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.meeting import Department, LocationType, MeetingStatus, User
+from app.models.meeting import MeetingStatus, User
 
 
 async def _seed_host(db: AsyncSession) -> User:

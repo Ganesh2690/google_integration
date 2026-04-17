@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 from sqlalchemy import select
@@ -134,7 +134,7 @@ class MeetingService:
             else:
                 setattr(meeting, field, value)
 
-        meeting.updated_at = datetime.now(timezone.utc)
+        meeting.updated_at = datetime.now(UTC)
 
         # Sync to Google if event exists
         if meeting.google_event_id and meeting.host:
@@ -162,7 +162,7 @@ class MeetingService:
         meeting = await self.get_meeting(db, meeting_id)
         _assert_transition(meeting.status, MeetingStatus.CANCELLED)
         meeting.status = MeetingStatus.CANCELLED
-        meeting.updated_at = datetime.now(timezone.utc)
+        meeting.updated_at = datetime.now(UTC)
 
         if meeting.google_event_id and meeting.host and meeting.host.google_tokens:
             try:
@@ -181,7 +181,7 @@ class MeetingService:
         meeting = await self.get_meeting(db, meeting_id)
         _assert_transition(meeting.status, MeetingStatus.COMPLETED)
         meeting.status = MeetingStatus.COMPLETED
-        meeting.updated_at = datetime.now(timezone.utc)
+        meeting.updated_at = datetime.now(UTC)
         await self._write_audit(db, meeting_id, "COMPLETED", actor_id, {})
         await db.commit()
         await db.refresh(meeting)
@@ -205,21 +205,20 @@ class MeetingService:
             else:
                 setattr(meeting, field, value)
 
-        meeting.updated_at = datetime.now(timezone.utc)
+        meeting.updated_at = datetime.now(UTC)
 
-        if meeting.google_event_id and meeting.host and meeting.host.google_tokens:
-            if payload.date:
-                end_dt = payload.date + timedelta(minutes=meeting.duration_mins)
-                patch: dict[str, Any] = {
-                    "start": {"dateTime": payload.date.isoformat(), "timeZone": "UTC"},
-                    "end": {"dateTime": end_dt.isoformat(), "timeZone": "UTC"},
-                }
-                try:
-                    await google_service.update_event(
-                        meeting.google_event_id, patch, meeting.host.google_tokens
-                    )
-                except Exception as exc:
-                    logger.warning("google_reschedule_skipped", reason=str(exc))
+        if meeting.google_event_id and meeting.host and meeting.host.google_tokens and payload.date:
+            end_dt = payload.date + timedelta(minutes=meeting.duration_mins)
+            patch: dict[str, Any] = {
+                "start": {"dateTime": payload.date.isoformat(), "timeZone": "UTC"},
+                "end": {"dateTime": end_dt.isoformat(), "timeZone": "UTC"},
+            }
+            try:
+                await google_service.update_event(
+                    meeting.google_event_id, patch, meeting.host.google_tokens
+                )
+            except Exception as exc:
+                logger.warning("google_reschedule_skipped", reason=str(exc))
 
         await self._write_audit(db, meeting_id, "RESCHEDULED", actor_id, update_data)
         await db.commit()
@@ -268,7 +267,7 @@ class MeetingService:
             action=action,
             actor_id=actor_id,
             payload=safe_payload,
-            created_at=datetime.now(timezone.utc),
+            created_at=datetime.now(UTC),
         )
         db.add(log)
 
