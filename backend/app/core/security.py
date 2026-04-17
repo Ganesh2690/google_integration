@@ -16,7 +16,7 @@ def create_access_token(subject: str, extra: dict[str, Any] | None = None) -> st
     payload: dict[str, Any] = {"sub": subject, "exp": expire}
     if extra:
         payload.update(extra)
-    return jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
+    return str(jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM))
 
 
 def decode_access_token(token: str) -> dict[str, Any]:

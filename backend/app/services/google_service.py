@@ -4,7 +4,7 @@ import uuid
 from typing import Any
 
 from google.oauth2.credentials import Credentials
-from googleapiclient.discovery import build  # type: ignore[import-untyped]
+from googleapiclient.discovery import build
 from starlette.concurrency import run_in_threadpool
 from tenacity import retry, stop_after_attempt, wait_exponential
 
@@ -17,7 +17,7 @@ logger = get_logger(__name__)
 
 class GoogleService:
     def _client(self, tokens: dict[str, Any]) -> Any:
-        creds = Credentials(
+        creds = Credentials(  # type: ignore[no-untyped-call]
             token=tokens.get("access_token"),
             refresh_token=tokens.get("refresh_token"),
             token_uri="https://oauth2.googleapis.com/token",

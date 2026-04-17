@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import RedirectResponse
-from google_auth_oauthlib.flow import Flow  # type: ignore[import-untyped]
+from google_auth_oauthlib.flow import Flow
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
