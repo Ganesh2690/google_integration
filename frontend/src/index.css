@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    @apply bg-gray-50 text-gray-900;
+  }
+}
+
+/* FullCalendar overrides */
+.fc .fc-toolbar.fc-header-toolbar {
+  display: none;
+}
+
+.fc .fc-daygrid-day-number {
+  @apply text-sm font-medium text-gray-700 p-2;
+}
+
+.fc .fc-col-header-cell-cushion {
+  @apply text-xs font-semibold text-gray-500 uppercase tracking-wide py-2;
+}
+
+.fc .fc-daygrid-day {
+  @apply border-gray-200;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+  background: transparent;
+}
+
+.fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+  @apply bg-blue-600 text-white rounded-full w-7 h-7 flex items-center justify-center;
+}
+
+.fc-event {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 1px 2px !important;
+}
+
+.fc-event-main {
+  padding: 0 !important;
+}
+
+.fc-daygrid-event-harness {
+  margin-bottom: 2px !important;
+}
+
+.fc .fc-scrollgrid {
+  border-radius: 0;
+  border-color: #e5e7eb;
+}
+
+.fc .fc-scrollgrid-section-header td {
+  border-bottom: 1px solid #e5e7eb;
+}
